@@ -29,14 +29,14 @@ public class GameController {
     private GamePanel view;
     private Level level;
     private MapMatrix model;
-    private Stack<GameState> history;  // 添加历史记录栈
+    private Stack<GameState> history; // 添加历史记录栈
     private boolean isPaused = false;
 
     public GameController(GamePanel view, Level level) {
         this.view = view;
         this.level = level;
         model = level.getMap();
-        this.history = new Stack<>();  // 初始化栈
+        this.history = new Stack<>(); // 初始化栈
         view.setController(this);
     }
 
@@ -49,8 +49,7 @@ public class GameController {
         GameState state = new GameState(
                 currentMap,
                 hero.getRow(),
-                hero.getCol()
-        );
+                hero.getCol());
         history.push(state);
     }
 
@@ -100,7 +99,7 @@ public class GameController {
             System.arraycopy(previousMap[i], 0, currentMap[i], 0, model.getWidth());
         }
 
-        view.decreaseStep();  // 减少步数
+        view.decreaseStep(); // 减少步数
         return true;
     }
 
@@ -110,7 +109,7 @@ public class GameController {
         } else {
             // 读入数据
             StringBuilder string = new StringBuilder();
-            File file=level.getSaveFile();
+            File file = level.getSaveFile();
             System.out.println(file);
             try (BufferedReader reader = new BufferedReader(new FileReader(level.getSaveFile()))) {
                 String line;
@@ -222,6 +221,10 @@ public class GameController {
                     "Victory！\nYour time: " + finalTime.substring(6),
                     "Victory",
                     JOptionPane.INFORMATION_MESSAGE);
+            level.setStep(-1);
+            model = level.getMap();
+            view.resetTimer();
+            restartGame();
         }
     }
 
@@ -268,6 +271,10 @@ public class GameController {
                     "Soft Fail！\nYour time: " + finalTime.substring(6),
                     "Soft Fail",
                     JOptionPane.INFORMATION_MESSAGE);
+            restartGame();
+            level.setStep(-1);
+            model = level.getMap();
+            view.resetTimer();
         }
     }
     // TODO: add other methods such as loadGame,
