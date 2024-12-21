@@ -29,22 +29,14 @@ public class GameController {
     private GamePanel view;
     private Level level;
     private MapMatrix model;
-<<<<<<< HEAD
     private Stack<GameState> history; // 添加历史记录栈
-=======
-    private Stack<GameState> history;  // 添加历史记录栈
->>>>>>> 4eb55231aa3123dd17fb21096da062a0d2e1029e
     private boolean isPaused = false;
 
     public GameController(GamePanel view, Level level) {
         this.view = view;
         this.level = level;
         model = level.getMap();
-<<<<<<< HEAD
         this.history = new Stack<>(); // 初始化栈
-=======
-        this.history = new Stack<>();  // 初始化栈
->>>>>>> 4eb55231aa3123dd17fb21096da062a0d2e1029e
         view.setController(this);
     }
 
@@ -57,12 +49,7 @@ public class GameController {
         GameState state = new GameState(
                 currentMap,
                 hero.getRow(),
-<<<<<<< HEAD
                 hero.getCol());
-=======
-                hero.getCol()
-        );
->>>>>>> 4eb55231aa3123dd17fb21096da062a0d2e1029e
         history.push(state);
     }
 
@@ -112,11 +99,7 @@ public class GameController {
             System.arraycopy(previousMap[i], 0, currentMap[i], 0, model.getWidth());
         }
 
-<<<<<<< HEAD
         view.decreaseStep(); // 减少步数
-=======
-        view.decreaseStep();  // 减少步数
->>>>>>> 4eb55231aa3123dd17fb21096da062a0d2e1029e
         return true;
     }
 
@@ -126,11 +109,7 @@ public class GameController {
         } else {
             // 读入数据
             StringBuilder string = new StringBuilder();
-<<<<<<< HEAD
             File file = level.getSaveFile();
-=======
-            File file=level.getSaveFile();
->>>>>>> 4eb55231aa3123dd17fb21096da062a0d2e1029e
             System.out.println(file);
             try (BufferedReader reader = new BufferedReader(new FileReader(level.getSaveFile()))) {
                 String line;

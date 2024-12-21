@@ -1,8 +1,12 @@
 package com.example.view.game;
 
-import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
+import javax.swing.JComponent;
 
 public class Box extends JComponent {
 
@@ -16,6 +20,7 @@ public class Box extends JComponent {
         this.setLocation(5, 5);
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         // 启用抗锯齿
