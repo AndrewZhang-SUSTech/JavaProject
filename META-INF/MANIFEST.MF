@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Created-By: Maven Jar Plugin 3.2.0
+Build-Jdk-Spec: 23
+Class-Path: fastjson-2.0.53.jar fastjson2-extension-2.0.53.jar fastjson2
+ -2.0.53.jar
+Main-Class: com.example.Main
+
