@@ -1,10 +1,14 @@
 package com.example.view.game;
 
-import com.example.view.game.Hero;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.border.Border;
-import java.awt.*;
 
 public class GridComponent extends JComponent {
     private int row;
@@ -39,21 +43,24 @@ public class GridComponent extends JComponent {
 
         Color borderColor = color;
         switch (id % 10) {
-            case 1: // 墙
+            case 1 -> {
+                // 墙
                 g2d.setColor(WALL_COLOR);
                 g2d.fillRect(0, 0, getWidth(), getHeight());
                 g2d.setColor(WALL_COLOR.darker());
                 g2d.fillRect(getWidth()-3, 0, 3, getHeight());
                 g2d.fillRect(0, getHeight()-3, getWidth(), 3);
                 borderColor = WALL_COLOR.darker();
-                break;
+            }
 
-            case 0: // 地板
+            case 0 -> {
+                // 地板
                 g2d.setColor(FLOOR_COLOR);
                 g2d.fillRect(0, 0, getWidth(), getHeight());
-                break;
+            }
 
-            case 2: // 目标点
+            case 2 -> {
+                // 目标点
                 // 绘制地板背景
                 g2d.setColor(FLOOR_COLOR);
                 g2d.fillRect(0, 0, getWidth(), getHeight());
@@ -63,44 +70,44 @@ public class GridComponent extends JComponent {
                 int margin = (getWidth() - diamondSize) / 2;
                 // 创建钻石的点
                 int[] xPoints = {
-                        margin + diamondSize/2,           // 顶点
-                        margin + diamondSize,             // 右点
-                        margin + diamondSize/2,           // 底点
-                        margin                            // 左点
+                    margin + diamondSize/2,           // 顶点
+                    margin + diamondSize,             // 右点
+                    margin + diamondSize/2,           // 底点
+                    margin                            // 左点
                 };
                 int[] yPoints = {
-                        margin,                           // 顶点
-                        margin + diamondSize/2,           // 右点
-                        margin + diamondSize,             // 底点
-                        margin + diamondSize/2            // 左点
+                    margin,                           // 顶点
+                    margin + diamondSize/2,           // 右点
+                    margin + diamondSize,             // 底点
+                    margin + diamondSize/2            // 左点
                 };
                 // 绘制钻石主体
                 g2d.setColor(DIAMOND_COLOR);
                 g2d.fillPolygon(xPoints, yPoints, 4);
                 // 添加高光效果
                 int[] lightXPoints = {
-                        xPoints[0],
-                        xPoints[1],
-                        xPoints[0]
+                    xPoints[0],
+                    xPoints[1],
+                    xPoints[0]
                 };
                 int[] lightYPoints = {
-                        yPoints[0],
-                        yPoints[1],
-                        yPoints[1]
+                    yPoints[0],
+                    yPoints[1],
+                    yPoints[1]
                 };
                 g2d.setColor(DIAMOND_LIGHT);
                 g2d.fillPolygon(lightXPoints, lightYPoints, 3);
 
                 // 添加阴影效果
                 int[] shadowXPoints = {
-                        xPoints[0],
-                        xPoints[2],
-                        xPoints[3]
+                    xPoints[0],
+                    xPoints[2],
+                    xPoints[3]
                 };
                 int[] shadowYPoints = {
-                        yPoints[1],
-                        yPoints[2],
-                        yPoints[3]
+                    yPoints[1],
+                    yPoints[2],
+                    yPoints[3]
                 };
                 g2d.setColor(DIAMOND_SHADOW);
                 g2d.fillPolygon(shadowXPoints, shadowYPoints, 3);
@@ -109,7 +116,7 @@ public class GridComponent extends JComponent {
                 g2d.setColor(Color.BLACK);
                 g2d.setStroke(new BasicStroke(1));
                 g2d.drawPolygon(xPoints, yPoints, 4);
-                break;
+            }
         }
 
         Border border = BorderFactory.createLineBorder(borderColor, 1);

@@ -42,7 +42,7 @@ public class GamePanel extends ListenerPanel {
         this.model = level.getMap();
         this.setSize(model.getWidth() * GRID_SIZE + 4, model.getHeight() * GRID_SIZE + 4);
         this.grids = new GridComponent[model.getHeight()][model.getWidth()];
-        timer = new Timer(1000, e -> {
+        timer = new Timer(1000, _ -> {
             level.setSeconds(level.getSeconds() + 1);
             updateTimeLabel();
         });
@@ -155,12 +155,14 @@ public class GamePanel extends ListenerPanel {
         }
     }
 
+    @Override
     public void doUndo() {
         if (isPaused) return;
         System.out.println("Click BACK_SPACE");
         controller.undoMove();
     }
 
+    @Override
     public void doPause() {
         isPaused = !isPaused;
         if (isPaused) {
@@ -217,8 +219,7 @@ public class GamePanel extends ListenerPanel {
         Container parent = getParent();
         if (parent != null) {
             for (Component comp : parent.getComponents()) {
-                if (comp instanceof JButton) {
-                    JButton btn = (JButton) comp;
+                if (comp instanceof JButton btn) {
                     String text = btn.getText();
                     if (text.equals("↑") || text.equals("↓") ||
                             text.equals("←") || text.equals("→") ||
@@ -230,6 +231,7 @@ public class GamePanel extends ListenerPanel {
         }
     }
 
+    @Override
     protected void processKeyEvent(KeyEvent e) {
         // 空格键需要特殊处理，不受 enabled 状态影响
         if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_SPACE) {
