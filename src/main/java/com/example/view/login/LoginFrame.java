@@ -136,6 +136,8 @@ public class LoginFrame extends JFrame {
                 levelFrame.setSaving(newSavingProfile);
                 this.levelFrame.setVisible(true);
                 this.setVisible(false);
+                username.setText("");
+                password.setText("");
             }
             // check login info
 

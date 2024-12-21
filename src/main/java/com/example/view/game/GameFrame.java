@@ -41,7 +41,6 @@ public class GameFrame extends JFrame {
     private JLabel timeLabel;
     private final LevelFrame levelFrame;
     private JButton pauseBtn;
-    private boolean isPaused = false;
     private final JLabel stepLabel;
 
     public GameFrame(LevelFrame levelFrame, int width, int height, Saving saving, int levelId) {

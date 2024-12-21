@@ -14,6 +14,7 @@ public class Main {
             LevelFrame levelFrame = new LevelFrame(500, 200);
             levelFrame.setVisible(false);
             loginFrame.setLevelFrame(levelFrame);
+            levelFrame.setLoginFrame(loginFrame);
         });
     }
 }
