@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,6 +22,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.example.model.Level;
+import com.example.model.MapMatrix;
 import com.example.model.Saving;
 import com.example.view.FrameUtil;
 import com.example.view.level.LevelFrame;
@@ -52,6 +54,10 @@ public class LoginFrame extends JFrame {
                     Saving.getMD5Hash(password.getText()));
             System.out.println(newSavingProfile.getUser() + '\n' + newSavingProfile.getPassword());
 
+            boolean loginSucceed = false;
+            boolean isSavingRegistered = false;
+            boolean isFileDamaged = false;
+
             StringBuilder json = new StringBuilder();
             // 读文件
             try {
@@ -80,8 +86,14 @@ public class LoginFrame extends JFrame {
                 } else {
                     savings = new ArrayList<>();
                 }
+
+                if (savings.stream().map(Saving::getLevels).flatMap(List::stream)
+                        .anyMatch(e -> !MapMatrix.isValidMatrix(e.getMap().getMatrix()))) {
+                    throw new JSONException("Invalid matrix");
+                }
             } catch (JSONException exception) {
                 // 重载配置文件
+                isFileDamaged = true;
                 int response = JOptionPane.showConfirmDialog(this, "配置文件损坏，是否重置配置文件", "确认", JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
                 if (response == JOptionPane.YES_OPTION) {
@@ -92,11 +104,9 @@ public class LoginFrame extends JFrame {
                     } catch (IOException exception2) {
                         System.out.println("写入错误");
                     }
-
                 }
             }
-            boolean loginSucceed = false;
-            boolean isSavingRegistered = false;
+
             if (savings == null) {
                 savings = new ArrayList<>();
             }
@@ -132,7 +142,7 @@ public class LoginFrame extends JFrame {
                     }
                 }
             }
-            if (this.levelFrame != null && loginSucceed) {
+            if (this.levelFrame != null && loginSucceed && !isFileDamaged) {
                 levelFrame.setSaving(newSavingProfile);
                 this.levelFrame.setVisible(true);
                 this.setVisible(false);
